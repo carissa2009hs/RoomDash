@@ -10,10 +10,44 @@
             <h1 class="text-2xl font-bold text-gray-900">Pembayaran Sewa</h1>
         </div>
     </div>
+    
+    @if(session('success'))
+    <div class="bg-green-100 border border-green-400 text-green-800 rounded-xl px-4 py-3 mb-6 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check"></i>
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if (session('error'))
+    <div class="bg-red-100 border border-red-400 text-red-800 rounded-xl px-4 py-3 mb-6 flex items-center gap-2">
+        <i class="fa-solid fa-circle-xmark"></i>
+        {{ session('error') }}
+    </div>
+    @endif
 
     <div class="max-w-4xl mx-auto p-8 bg-white rounded-2xl border border-gray-200">
         <h1 class="text-xl text-gray-800 font-semibold mb-1">Upload Bukti Transfer</h1>
         <p class="text-sm text-gray-500 mb-6">Pastikan bukti transfer terlihat jelas dan nominal sesuai tagihan</p>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-sm text-gray-500">Tagihan Bulan Ini</p>
+                    <p class="text-xl font-bold text-gray-900">Rp {{ number_format($penyewa->tagihan, 0, ',', '.') }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Jatuh Tempo</p>
+                    <p class="text-xl font-bold text-gray-900">{{ \Carbon\Carbon::parse($penyewa->jatuh_tempo)->translatedFormat('d F Y') }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Status</p>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+                          {{ $penyewa->status_bayar === 'Lunas' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                          {{ $penyewa->status_bayar }}
+                     </span>
+                </div>
+            </div>
+        </div>
 
         <div class="bg-yellow-100 bg-opacity-80 border border-yellow-500 rounded-xl p-2 mb-6 relative overflow-hidden">
             <div class="flex gap-4">
@@ -31,6 +65,16 @@
             </div>
         </div>
 
+        @if($pembayaranAktif && $pembayaranAktif->status === 'Menunggu Konfirmasi')
+            <div class="bg-blue-50 border border-blue-300 rounded-xl p-4 mb-6 text-center">
+                <i class="fa-solid fa-hourglass-half text-blue-500 text-2xl mb-2"></i>
+                <p class="font-semibold text-blue-700">Bukti bayar sudah dikirim</p>
+                <p class="text-sm text-gray-500 mt-1">Menunggu konfirmasi dari admin</p>
+            </div>
+        @else
+          <form action="{{ route('pembayaran.upload', $pembayaranAktif->id ?? 0) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+
         <div class="border-2 border-dashed border-gray-300 rounded-2xl bg-gray-50 p-6 text-center mb-8 cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-all"
             id="uploadZone" onclick="document.getElementById('fileInput').click()">
             <div
@@ -40,7 +84,7 @@
             <h3 class="font-semibold text-gray-800">Klik atau drag bukti transfer</h3>
             <p class="text-gray-500 text-sm">Screenshot dari mobile banking</p>
             <p class="text-gray-500 text-xs">JPG, PNG, PDF • Maks 5MB</p>
-            <input type="file" id="fileInput" accept="image/*,.pdf" class="hidden" onclick="handleFileUpload(event)">
+            <input type="file" id="fileInput" accept="image/*,.pdf" class="hidden" onchange="handleFileUpload(event)">
         </div>
          <div id="previewBox" class="hidden border border-gray-200 rounded-2xl overflow-hidden mb-8">
             <img id="previewImg" src="" alt="preview" class="w-full max-h-64 object-contain bg-gray-50">
@@ -54,6 +98,10 @@
                 </button>
             </div>
          </div>
+
+         @error('bukti_bayar')
+             <p class="text-red-50 text-xs mb-4">{{ $message }}</p>
+         @enderror
 
          <div class="mb-6">
             <label class="block text-base font-semibold text-gray-800 mb-2">Jumlah Transfer</label>
@@ -74,13 +122,57 @@
            text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
          </div>
 
-         <button class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-xl text-base font-bold 
-         hover:-translate-y-1 shadow-sm hover:shadow-lg transition-all flex items-center justify-center">
+         <button type="submit" class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-xl text-base font-bold hover:-translate-y-1 shadow-sm hover:shadow-lg transition-all flex items-center justify-center gap-2">
          <i class="fa-solid fa-upload mr-2"></i>
          <p class="text-sm text-white">Kirim Bukti</p>
         </button>
-
+    </form>
+    @endif
     </div>
+
+    <div class="max-w-4xl mx-auto mt-6 bg-white rounded-2xl border border-gray-200 p-6">
+        <h2 class="font-bold text-gray-800 mb-4">Riwayat Pembayaran</h2>
+
+        @forelse ($pembayarans as $bayar )
+            <div class="flex justify-between items-center p-4 border border-stone-200 rounded-xl mb-3 hover:border-blue-400 transition">
+                <div>
+                    <p class="font-bold text-gray-900">{{ $bayar->bulan }}</p>
+                    <p class="text-sm text-gray-500">Rp {{ number_format($bayar->jumlah, 0, ', ', '.') }}</p>
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+                {{ $bayar->status === 'Lunas' ? 'bg-green-100 text-green-700' : '' }}
+                {{ $bayar->status === 'Menunggu Konfirmasi' ? 'bg-yellow-100 text-yellow-700' : '' }}
+                {{ $bayar->status === 'Belum Lunas' ? 'bg-red-100 text-red-700' : '' }}">
+                {{ $bayar->status }}
+            </span>
+            </div>
+        @empty
+        <p class="text-center text-gray-400 text-sm py-4">Belum ada riwayat pembayaran</p> 
+        @endforelse
+    </div>
+
+    <script>
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImg').src= e.target.result;
+                document.getElementById('fileName').textContent= file.name;
+                document.getElementById('fileSize').textContent= (file.size/ 1024 / 1024). toFixed(2) + 'MB';
+                document.getElementById('previewBox').classList.remove('hidden');
+                document.getElementById('uploadZone').classList.add('hidden');
+            }
+            reader.readAsDataURL(file)
+        }
+
+        function removeFile() {
+            document.getElementById('fileInput').value = '';
+            document.getElementById('previewBox').classList.add('hidden');
+            document.getElementById('uploadZone').classList.remove('hidden');
+        }
+    </script>
 
 
 @endsection

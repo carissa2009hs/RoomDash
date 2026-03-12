@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         $user     = Auth::user();
         $penyewa  = $user->penyewa;
-        $sisaHari = Carbon::now()->diffInDays($penyewa->jatuh_tempo, false);
+        $sisaHari = (int) Carbon::now()->diffInDays($penyewa->jatuh_tempo, false);
 
         $pembayaranTerakhir = Pembayaran::where('user_id', $user->id)
                                 ->orderBy('created_at', 'desc')
@@ -35,11 +35,25 @@ class UserController extends Controller
     public function pembayaran()
     {
         $user        = Auth::user();
+        $penyewa     = $user->penyewa;
+        $pembayaranAktif = Pembayaran::firstOrCreate(
+            [
+                'user_id' => $user->id,
+                'bulan'   => now()->translatedFormat('F Y'),
+            ],
+            [
+                'jumlah' => $penyewa->tagihan,
+                'status' => 'Belum Lunas',
+            ]
+        );
+    
         $pembayarans = Pembayaran::where('user_id', $user->id)
                         ->orderBy('created_at', 'desc')
                         ->get();
-
-        return view('user.pembayaran', compact('user', 'pembayarans'));
+    
+        return view('user.pembayaran', compact(
+            'user', 'penyewa', 'pembayarans', 'pembayaranAktif'
+        ));
     }
 
     public function uploadBukti(Request $request, $id)
@@ -90,6 +104,7 @@ class UserController extends Controller
             'user_id'   => Auth::id(),
             'judul'     => $request->judul,
             'deskripsi' => $request->deskripsi,
+            'prioritas' => $request->prioritas ?? 'Ringan',
             'foto'      => $fotoPath,
             'status'    => 'Menunggu',
         ]);

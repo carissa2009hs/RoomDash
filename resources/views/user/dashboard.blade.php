@@ -194,10 +194,10 @@
                     <p class="text-xs text-gray-900 font-semibold">
                         {{ \Carbon\Carbon::parse($laporan->created_at)->translatedFormat('d F Y') }}
                     </p>
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
                         {{ $laporan->status === 'Selesai' ? 'bg-green-100 text-green-800' : ''}}
                         {{ $laporan->status === 'Diproses' ? 'bg-yelllow-100 text-yellow-800' : ''}}
-                        {{ $laporan->status === 'Menunggu' ? 'bg-red-100 text-red-800' : ''}}
+                        {{ $laporan->status === 'Menunggu' ? 'bg-red-100 text-red-800' : ''}}">
                         {{ $laporan->status}}
                     </span>
                 </div>
