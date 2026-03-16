@@ -17,6 +17,7 @@ class User extends Authenticatable
         'email',
         'no_hp',
         'password',
+        'role',
     ];
 
     protected $hidden = [
@@ -46,4 +47,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(LaporanKerusakan::class);
     }
+
 }

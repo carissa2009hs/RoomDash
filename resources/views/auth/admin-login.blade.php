@@ -11,24 +11,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-sky-100 flex items-center justify-center p-4">
+<body class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-100 flex items-center justify-center p-4">
 
 
-    <div
-        class="fixed top-0 left-0 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-    </div>
-    <div
-        class="fixed bottom-0 right-0 w-80 h-80 bg-indigo-200 rounded-full opacity-20 blur-3xl translate-x-1/4 translate-y-1/4 pointer-events-none">
-    </div>
-    <div class="fixed top-1/2 right-1/4 w-64 h-64 bg-sky-200 rounded-full opacity-25 blur-3xl pointer-events-none">
-    </div>
+ 
 
 
     <div
         class="relative z-10 w-full max-w-4xl bg-white rounded-3xl shadow-xl shadow-blue-100 overflow-hidden flex min-h-[560px]">
 
         <div
-            class="hidden md:flex md:w-5/12 bg-gradient-to-b from-blue-700 via-blue-600 to-blue-400 flex-col justify-between p-12 relative overflow-hidden">
+            class="hidden md:flex md:w-5/12 bg-gradient-to-b from-green-600 via-green-500 to-green-400 flex-col justify-between p-12 relative overflow-hidden">
 
 
             <div
@@ -49,12 +42,9 @@
 
 
             <div class="relative z-10 flex flex-col items-center text-center my-auto">
-                <h1 class="text-white text-3xl font-bold leading-tight tracking-tight mb-4">
-                    Selamat Datang!
+                <h1 class="text-white text-3xl font-semibold font-poppins leading-tight tracking-tight mb-4">
+                    Selamat Datang Admin!
                 </h1>
-                <p class="text-blue-100 text-sm leading-relaxed max-w-xs">
-                    Bayar sewa, lapor kerusakan, cek riwayat - mudah, cepat dan transparan.
-                </p>
             </div>
         </div>
 

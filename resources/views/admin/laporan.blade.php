@@ -77,7 +77,7 @@
             <div class="px-6 py-4 border-b border-stone-100 flex items-center justify-between">
                 <div>
                     <h3 class="font-bold text-base">Laporan Aktif</h3>
-                    <p class="text-xs text-gray-500 mt-0.5">5 Laporan Menunggu Penanganan</p>
+                    <p class="text-xs text-gray-500 mt-0.5">{{ $laporanAktif->count() }} Laporan Menunggu Penanganan</p>
                 </div>
                 <div class="flex gap-1 bg-stone-100 rounded-lg p-1">
                     <button class="px-3 py-1.5 rounded-md text-xs font-semibold hover:bg-white shadow-sm">Baru</button>
@@ -85,99 +85,43 @@
                 </div>
             </div>
 
+            @forelse ($laporanAktif as $laporan)
             <div
                 class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl cursor-pointer transition-all duration-200 hover:border-amber-400 hover:bg-amber-50">
                 <div class="flex-1">
-                    <p class="font-bold text-gray-900">Shower kamar saya mati</p>
+                    <p class="font-bold text-gray-900">{{ $laporan->judul }}</p>
                     <p class="text-xs text-gray-800 mt-1">
                         <i class="fas fa-door-closed text-xs text-gray-800 mt-1"></i>
-                        Kamar A09 - Carissa Hana
+                        {{ $laporan->user->penyewa->nomor_kamar ?? '-' }} - {{ $laporan->user->name }}</p>
                     </p>
                     <p class="text-sm text-gray-500 mt-1 leading-relaxed">
-                        Air shower tidak keluar deras, ada kebocoran di pipa bawah.
+                        {{ $laporan->deskripsi }}
                       </p>
 
                     <div class="flex items-center gap-2 mt-2">
-                        <span
-                            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-600">
-                            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                            Prioritas Tinggi
-                        </span>
-                        <span class="text-xs text-gray-500">18 Feb 2026, 06:50</span>
-                    </div>
-                </div>
-            </div>
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold
+                          {{ $laporan->prioritas == 'Berat' ? 'bg-red-100 text-red-600' : ($laporan->prioritas == 'Sedang' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-700') }}">
+                    {{ $laporan->prioritas }}
+                </span>
 
-            <div
-                class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl cursor-pointer transition-all duration-200 hover:border-amber-400 hover:bg-amber-50">
-                <div class="flex-1">
-                    <p class="font-bold text-gray-900">Lampu kamar mati</p>
-                    <p class="text-xs text-gray-800 mt-1">
-                        <i class="fas fa-door-closed text-xs text-gray-800 mt-1"></i>
-                        Kamar A09 - Carissa Hana
-                    </p>
-                    <p class="text-sm text-gray-500 mt-1 leading-relaxed">
-                        Lampu kamar mati, sudah 2 hari.
-                      </p>
-
-                    <div class="flex items-center gap-2 mt-2">
-                        <span
-                            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
-                            Prioritas Rendah
-                        </span>
-                        <span class="text-xs text-gray-500">18 Feb 2026, 06:50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl cursor-pointer transition-all duration-200 hover:border-amber-400 hover:bg-amber-50">
-                <div class="flex-1">
-                    <p class="font-bold text-gray-900">Pintu tidak bisa dikunci</p>
-                    <p class="text-xs text-gray-800 mt-1">
-                        <i class="fas fa-door-closed text-xs text-gray-800 mt-1"></i>
-                        Kamar A09 - Carissa Hana
-                    </p>
-                    <p class="text-sm text-gray-500 mt-1 leading-relaxed">
-                        Kunci pintu sering macet, harus dipaksa beberapa kali baru bisa terkunci.
-                      </p>
-
-                    <div class="flex items-center gap-2 mt-2">
-                        <span
-                            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-600">
-                            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                            Prioritas Tinggi
-                        </span>
-                        <span class="text-xs text-gray-500">18 Feb 2026, 06:50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl cursor-pointer transition-all duration-200 hover:border-amber-400 hover:bg-amber-50">
-                <div class="flex-1">
-                    <p class="font-bold text-gray-900">Ac di kamar tidak dingin</p>
-                    <p class="text-xs text-gray-800 mt-1">
-                        <i class="fas fa-door-closed text-xs text-gray-800 mt-1"></i>
-                        Kamar A09 - Carissa Hana
-                    </p>
-                    <p class="text-sm text-gray-500 mt-1 leading-relaxed">
-                        Ac tidak dingin sudah beberapa kali ganti suhu tidak bisa, kamar jadi terasa panas
-                       </p>
-
-                    <div class="flex items-center gap-2 mt-2">
-                        <span
-                            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
-                            Prioritas Rendah
-                        </span>
-                        <span class="text-xs text-gray-500">18 Feb 2026, 06:50</span>
-                    </div>
-                </div>
+                <span class="text-xs text-gray-500">{{ $laporan->created_at->format('d M Y, H:i') }}</span>
+                <form action="{{ route('admin.laporan.status', $laporan->id) }}" method="POST" class="ml-auto">
+                    @csrf
+                    @if ($laporan->status == 'Menunggu')
+                        <input type="hidden" name="status" value="Diproses">
+                        <button type="submit" class="px-3 py-1 rounded-lg text-xs font-semibold bg-yellow-100 text-yellow-700 hover:bg-yellow-200">Proses</button>
+                    @elseif ($laporan->status == 'Diproses')
+                        <input type="hidden" name="status" value="Selesai">
+                        <button type="submit" class="px-3 py-1 rounded-lg text-xs font-semibold bg-green-100 text-green-700 hover:bg-green-200">Proses</button>
+                    @endif
+                </form>
             </div>
         </div>
-
+    </div>
+    @empty
+    <p class="text-center text-gray-400 text-sm py-8">Tidak ada laporan aktif</p>
+    @endforelse
+</div>
 
         <!-- Laporan Baru -->
         <div class="bg-white rounded-xl border border-stone-200">
@@ -187,63 +131,31 @@
                     <p class="text-xs text-gray-500 mt-0.5">Butuh Tindakan Segera</p>
                 </div>
             </div>
-
-            <div
-                class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl cursor-pointer transition-all duration-200 hover:border-amber-400 hover:bg-amber-50">
+        
+            @forelse ($laporanBaru as $laporan)
+            <div class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl cursor-pointer transition-all duration-200 hover:border-amber-400 hover:bg-amber-50">
                 <div class="flex-1">
-                    <p class="font-bold text-gray-900">Flush toilet rusak</p>
+                    <p class="font-bold text-gray-900">{{ $laporan->judul }}</p>
                     <p class="text-xs text-gray-800 mt-1">
-                        <i class="fas fa-door-closed text-xs text-gray-800 mt-1"></i>
-                        Kamar A09 - Carissa Hana
-                    </p>
-                    <p class="text-sm text-gray-500 mt-1 leading-relaxed">
-                        Tuas flush toilet patah, perlu diganti dengan yang baru segera.
-                    </p>
+                        <i class="fas fa-door-closed text-xs text-gray-800 mr-1"></i>
+                        {{ $laporan->user->penyewa->nomor_kamar ?? '-' }} - {{ $laporan->user->name }}</p>
+                    <p class="text-sm text-gray-500 mt-1 leading-relaxed">{{ $laporan->deskripsi }}</p>
                     <div class="flex items-center gap-2 mt-2">
-                        <span
-                            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
-                            Prioritas Rendah
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold
+                           {{ $laporan->prioritas == 'Berat' ? 'bg-red-100 text-red-600' : ($laporan->prioritas == 'Sedang' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-700') }}">
+                           {{ $laporan->prioritas }}
                         </span>
-                        <span class="text-xs text-gray-500">18 Feb 2026, 06:50</span>
+                        <span class="text-xs text-gray-500">{{ $laporan->created_at->format('d M Y, H:i') }}</span>
                     </div>
                 </div>
             </div>
-
-            <div
-                class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl cursor-pointer transition-all duration-200 hover:border-amber-400 hover:bg-amber-50">
-                <div class="flex-1">
-                    <p class="font-bold text-gray-900">Wifi lambat</p>
-                    <p class="text-xs text-gray-800 mt-1">
-                        <i class="fas fa-door-closed text-xs text-gray-800 mt-1"></i>
-                        Kamar A09 - Carissa Hana
-                    </p>
-                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">Koneksi wifi sangat lambat sudah 2 hari</p>
-
-                    <div class="flex items-center gap-2 mt-2">
-                        <span
-                            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                            <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
-                            Prioritas Rendah
-                        </span>
-                        <span class="text-xs text-gray-500">18 Feb 2026, 06:50</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="py-3 px-12 bg-green-200 border-slate-400 bg-opacity-40 rounded-xl mt-4 w-fit mx-auto">
+            @empty
+            <div class="py-3 px-12 bg-green-200 bg-opacity-40 rounded-xl mt-4 w-fit mx-auto">
                 <p class="text-emerald-500 text-sm flex items-center justify-center">
                     <i class="fa-solid fa-check text-emerald-500 text-sm mr-1"></i>
-                    Semua laporan baru sudah ditampilkan
+                    Semua laporan baru sudah ditangani
                 </p>
-                <p class="text-gray-500 text-xs flex items-center justify-center">8 laporan selesai ditangani bulan ini</p>
             </div>
-
-           
-
-    </div>
-
-    
-
-
+            @endforelse
+        </div>
 @endsection

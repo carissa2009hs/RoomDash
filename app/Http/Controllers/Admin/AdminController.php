@@ -21,12 +21,23 @@ class AdminController extends Controller
         $totalLunas    = Pembayaran::where('status', 'Lunas')->count();
         $totalTunggakan = Pembayaran::where('status', 'Belum Lunas')->count();
         $totalLaporan  = LaporanKerusakan::where('status', 'Menunggu')->count();
+        $totalMenunggu = Pembayaran::where('status', 'Menunggu Konfirmasi')->count();
+        $laporanTerbaru = LaporanKerusakan::with('user')->where('status', 'Menunggu')
+                          ->orderBy('created_at', 'desc')
+                          ->take(4)
+                          ->get();
+        $pembayaranTerbaru = Pembayaran::with('user.penyewa')
+                            ->orderBy('created_at', 'desc')
+                            ->take(5)
+                            ->get();
 
         return view('admin.dashboard', compact(
             'totalPenyewa',
             'totalLunas',
             'totalTunggakan',
-            'totalLaporan'
+            'totalLaporan',
+            'laporanTerbaru',
+            'pembayaranTerbaru',
         ));
     }
 
@@ -39,16 +50,37 @@ class AdminController extends Controller
     public function pembayaran()
     {
         $pembayarans = Pembayaran::with('user')->orderBy('created_at', 'desc')->get();
-        return view('admin.pembayaran', compact('pembayarans'));
+
+        $totalTerkumpul = Pembayaran::where('status', 'Lunas')->sum('jumlah');
+        $totalMenunggu = Pembayaran::where('status', 'Menunggu Konfirmasi')->count();
+        $totalTelat = Pembayaran::where('status', 'Belum Lunas')->count();
+        $totalLunas = Pembayaran::where('status', 'Lunas')->count();
+
+        return view('admin.pembayaran', compact(
+            'pembayarans',
+            'totalTerkumpul',
+            'totalMenunggu',
+            'totalTelat',
+            'totalLunas',
+        ));
     }
 
     public function laporan()
     {
         $laporans = LaporanKerusakan::with('user')->orderBy('created_at', 'desc')->get();
-        return view('admin.laporan', compact('laporans'));
+
+        $laporanAktif = $laporans->whereIn('status', ['Menunggu', 'Diproses']);
+        $laporanBaru  = $laporans->where('status', 'Menunggu');
+        $laporanSelesai = $laporans->where('status', 'Selesai');
+
+        return view('admin.laporan', compact(
+            'laporans',
+            'laporanAktif',
+            'laporanBaru',
+            'laporanSelesai',
+        ));
     }
 
-    // Admin konfirmasi pembayaran
     public function konfirmasiPembayaran($id)
     {
         $pembayaran = Pembayaran::findOrFail($id);
@@ -72,7 +104,6 @@ class AdminController extends Controller
     return back()->with('success', 'Pembayaran ditolak!');
 }
 
-    // Admin update status laporan
     public function updateStatusLaporan(Request $request, $id)
     {
         $laporan = LaporanKerusakan::findOrFail($id);
@@ -80,5 +111,13 @@ class AdminController extends Controller
         $laporan->user->notify(new StatusLaporanDiupdate($laporan));
 
         return back()->with('success', 'Status laporan berhasil diupdate!');
+    }
+
+    public function notifCount()
+    {
+        return response()->json([
+            'laporan' => LaporanKerusakan::where('status', 'Menunggu')->count(),
+            'pembayaran' => Pembayaran::where('status', 'Menunggu Konfirmasi')->count(),
+        ]);
     }
 }

@@ -12,6 +12,9 @@
 </div>
 
 <div class="max-w-4xl mx-auto p-8 bg-white rounded-2xl border border-gray-200">
+    <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+
     <h1 class="text-xl text-gray-800 font-semibold mb-1">Form Laporan Kerusakan</h1>
     <p class="text-sm text-gray-500 mb-6">Sertakan foto yang jelas dan deskripsi detail masalah.</p>
 
@@ -36,7 +39,7 @@
         <h3 class="font-semibold text-gray-800">Foto bagian yang rusak</h3>
         <p class="text-gray-500 text-sm">Ambil dari berbagai sudut</p>
         <p class="text-gray-500 text-xs">JPG, PNG, PDF • Maks 5MB</p>
-        <input type="file" id="fileInput" accept="image/*,.pdf" class="hidden" onclick="handleFileUpload(event)">
+        <input type="file" id="fileInput" name="foto" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
     </div>
      <div id="previewBox" class="hidden border border-gray-200 rounded-2xl overflow-hidden mb-8">
         <img id="previewImg" src="" alt="preview" class="w-full max-h-64 object-contain bg-gray-50">
@@ -53,14 +56,14 @@
 
      <div class="mb-6">
         <label class="block text-sm font-semibold text-gray-800 mb-2">Judul Masalah</label>
-            <input type="text" placeholder="Contoh: Ac tidak dingin..."
+            <input type="text" name="judul" placeholder="Contoh: Ac tidak dingin..."
             class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm
              text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
      </div>
 
      <div class="mb-4">
         <label class="block text-sm font-semibold text-gray-900 mb-2">Deskripsi detail</label>
-       <textarea rows="4" placeholder="Jelaskan masalahnya secara detail" 
+       <textarea name="deskripsi" rows="4" placeholder="Jelaskan masalahnya secara detail" 
        class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm
        text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"></textarea>
      </div>
@@ -74,19 +77,44 @@
  
      <div class="mb-6">
      <label class="block text-sm font-semibold text-gray-900 mb-2">Tingkat Prioritas</label>
-     <select class="w-full px-4 py-3 border border-gray-300 rounded-xl placeholder:Pilih Tingkat Prioritas">
-        <option value="rendah">Rendah</option>
-        <option value="sedang">Sedang</option>
-        <option value="rendah">Tinggi</option>
+     <select name="prioritas" class="w-full px-4 py-3 border border-gray-300 rounded-xl placeholder:Pilih Tingkat Prioritas">
+        <option value="Ringan">Ringan</option>
+        <option value="Sedang">Sedang</option>
+        <option value="Berat">Berat</option>
      </select>
     </div>
 
-     <button class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-xl text-base font-bold 
-     hover:-translate-y-1 shadow-sm hover:shadow-lg transition-all flex items-center justify-center">
-     <i class="fa-solid fa-upload mr-2"></i>
-     <p class="text-sm text-white">Kirim Laporan</p>
-    </button>
 
+    <button type="submit" class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-xl text-base font-bold hover:-translate-y-1 shadow-sm hover:shadow-lg transition-all flex items-center justify-center gap-2">
+        <i class="fa-solid fa-upload mr-2"></i>
+        <p class="text-sm text-white">Kirim Laporan</p>
+       </button>
+    </form>
    </div>
+
+
+   <script>
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('previewImg').src= e.target.result;
+            document.getElementById('fileName').textContent= file.name;
+            document.getElementById('fileSize').textContent= (file.size/ 1024 / 1024). toFixed(2) + 'MB';
+            document.getElementById('previewBox').classList.remove('hidden');
+            document.getElementById('uploadZone').classList.add('hidden');
+        }
+        reader.readAsDataURL(file)
+    }
+
+    function removeFile() {
+        document.getElementById('fileInput').value = '';
+        document.getElementById('previewBox').classList.add('hidden');
+        document.getElementById('uploadZone').classList.remove('hidden');
+    }
+</script>
+
 
 @endsection

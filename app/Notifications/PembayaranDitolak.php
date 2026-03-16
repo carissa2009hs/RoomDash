@@ -18,7 +18,7 @@ class PembayaranDitolak extends Notification
     }
 
  
-    public function toDatabse($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
             'judul' => 'Pembayaran Ditolak',

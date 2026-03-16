@@ -28,6 +28,7 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::get('/laporan', [AdminController::class, 'laporan'])->name('admin.laporan');
     Route::post('/laporan/{id}/status', [AdminController::class, 'updateStatusLaporan'])->name('admin.laporan.status');
     Route::post('/pembayaran/{id}/tolak', [AdminController::class, 'tolakPembayaran'])->name('admin.tolak');
+    Route::get('/notif-count', [AdminController::class, 'notifCount'])->name('admin.notif.count');
 });
 
 //User routes

@@ -82,9 +82,8 @@
                 <i class="fa-solid fa-camera text-2xl text-white"></i>
             </div>
             <h3 class="font-semibold text-gray-800">Klik atau drag bukti transfer</h3>
-            <p class="text-gray-500 text-sm">Screenshot dari mobile banking</p>
-            <p class="text-gray-500 text-xs">JPG, PNG, PDF • Maks 5MB</p>
-            <input type="file" id="fileInput" accept="image/*,.pdf" class="hidden" onchange="handleFileUpload(event)">
+
+            <input type="file" id="fileInput" name="bukti_bayar" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
         </div>
          <div id="previewBox" class="hidden border border-gray-200 rounded-2xl overflow-hidden mb-8">
             <img id="previewImg" src="" alt="preview" class="w-full max-h-64 object-contain bg-gray-50">

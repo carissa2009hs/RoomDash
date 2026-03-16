@@ -88,7 +88,8 @@ class UserController extends Controller
     }
 
     public function storeLaporan(Request $request)
-    {
+    {   
+        
         $request->validate([
             'judul'     => 'required|string|max:255',
             'deskripsi' => 'required|string',
@@ -100,7 +101,7 @@ class UserController extends Controller
             $fotoPath = $request->file('foto')->store('laporan_foto', 'public');
         }
 
-        LaporanKerusakan::create([
+        $laporan = LaporanKerusakan::create([
             'user_id'   => Auth::id(),
             'judul'     => $request->judul,
             'deskripsi' => $request->deskripsi,
