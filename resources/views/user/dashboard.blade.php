@@ -151,21 +151,17 @@
                 </div>
             </div>
 
-            @forelse ($pembayaranTerakhir as $bayar )
+            @forelse ($pembayaranTerakhir as $bayar)
             <div class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl hover:border-blue-600">
                 <div class="flex-1">
                     <div class="flex justify-between items-center">
-                    <p class="font-bold text-gray-900">{{ $bayar->bulan }}</p>
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        {{ $bayar->status === 'Lunas' ? 'bg-green-100 text-green-800' : ''}}
-                        {{ $bayar->status === 'Menunggu Konfirmasi' ? 'bg-yelllow-100 text-yellow-800' : ''}}
-                        {{ $bayar->status === 'Belum Lunas' ? 'bg-red-100 text-red-800' : ''}}
-                        {{ $bayar->status}}
-                    </span>
-                </div>
-                    <p class="text-sm text-gray-500 mt-1 leading-relaxed">
-                        Rp {{number_format($bayar->jumlah, 0, ',', '.')}}
-                    </p>
+                        <p class="font-bold text-gray-900">{{ $bayar->bulan }}</p>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                            {{ $bayar->status === 'Lunas' ? 'bg-green-100 text-green-800' : ($bayar->status === 'Menunggu Konfirmasi' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                            {{ $bayar->status }}
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">Rp {{ number_format($bayar->jumlah, 0, ',', '.') }}</p>
                 </div>
             </div>
             @empty
@@ -177,8 +173,6 @@
             Selengkapnya -></a>
         </div>
         
-         <!--Laporan Kerusakan-->
-   
         <div class="bg-white rounded-xl border border-stone-200">
             <div class="px-6 py-4 border-b border-stone-100 flex items-center justify-between">
                 <div>
@@ -187,26 +181,20 @@
                 </div>
             </div>
 
-            @forelse ($laporanTerakhir as $laporan )
+            @forelse ($laporanTerakhir as $laporan)
             <div class="flex gap-4 p-4 mx-5 my-3 border border-stone-200 rounded-xl hover:border-blue-600">
                 <div class="flex-1">
                     <div class="flex justify-between items-center">
-                    <p class="text-xs text-gray-900 font-semibold">
-                        {{ \Carbon\Carbon::parse($laporan->created_at)->translatedFormat('d F Y') }}
-                    </p>
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                        {{ $laporan->status === 'Selesai' ? 'bg-green-100 text-green-800' : ''}}
-                        {{ $laporan->status === 'Diproses' ? 'bg-yelllow-100 text-yellow-800' : ''}}
-                        {{ $laporan->status === 'Menunggu' ? 'bg-red-100 text-red-800' : ''}}">
-                        {{ $laporan->status}}
-                    </span>
-                </div>
-                    <p class="text-sm text-gray-900 font-bold mt-1 leading-relaxed">
-                        {{ $laporan->judul }}
-                    </p>
-                    <p class="text-xs text-gray-500 mt-1 leading-relaxed">
-                        {{ $laporan->prioritas }}
-                    </p>
+                        <p class="text-xs text-gray-900 font-semibold">
+                            {{ \Carbon\Carbon::parse($laporan->created_at)->translatedFormat('d F Y') }}
+                        </p>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                            {{ $laporan->status === 'Selesai' ? 'bg-green-100 text-green-800' : ($laporan->status === 'Diproses' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
+                            {{ $laporan->status }}
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-900 font-bold mt-1">{{ $laporan->judul }}</p>
+                    <p class="text-xs text-gray-500 mt-1">{{ $laporan->prioritas }}</p>
                 </div>
             </div>
             @empty
@@ -214,7 +202,7 @@
             @endforelse
 
             <a href="{{ route('user.riwayat') }}"
-            class="text-blue-700 text-sm font-semibold mt-3 mb-4 flex items-center justify-center">Lihat
+            class="text-blue-700 text-sm font-semibold mt-3 mb-4 flex items-center justify-center hover:underline">Lihat
             Selengkapnya -></a>
         </div>
     </div>

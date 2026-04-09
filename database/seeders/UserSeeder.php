@@ -28,17 +28,5 @@ class UserSeeder extends Seeder
             'tagihan' => 1200000,
         ]);
 
-        $user2 = User::create([
-            'name' => 'Hana',
-            'email' => 'hana@gmail.com',
-            'password' => Hash::make('karisagallagher'),
-        ]);
-        Penyewa::create([
-            'user_id' => $user2->id,
-            'nomor_kamar' => 'A09',
-            'status_bayar' => 'Belum Lunas',
-            'jatuh_tempo' => '2026-03-02',
-            'tagihan' => 950000,
-        ]);
     }
 }

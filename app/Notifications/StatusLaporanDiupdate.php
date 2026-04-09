@@ -18,7 +18,7 @@ class StatusLaporanDiupdate extends Notification
     }
 
  
-    public function toDatabse($notifiable)
+    public function toDatabase($notifiable)
     {
         return [
             'judul' => 'Status Laporan Diupdate',

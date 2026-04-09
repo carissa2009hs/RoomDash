@@ -29,25 +29,31 @@
         <h1 class="text-xl text-gray-800 font-semibold mb-1">Upload Bukti Transfer</h1>
         <p class="text-sm text-gray-500 mb-6">Pastikan bukti transfer terlihat jelas dan nominal sesuai tagihan</p>
 
+        @php
+            $pembayaranAktif = $pembayarans->first();
+        @endphp
+
+        @if($pembayaranAktif)
         <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
             <div class="flex justify-between items-center">
                 <div>
                     <p class="text-sm text-gray-500">Tagihan Bulan Ini</p>
-                    <p class="text-xl font-bold text-gray-900">Rp {{ number_format($penyewa->tagihan, 0, ',', '.') }}</p>
+                    <p class="text-xl font-bold text-gray-900">Rp {{ number_format($pembayaranAktif->jumlah, 0, ',', '.') }}</p>
                 </div>
                 <div>
                     <p class="text-sm text-gray-500">Jatuh Tempo</p>
-                    <p class="text-xl font-bold text-gray-900">{{ \Carbon\Carbon::parse($penyewa->jatuh_tempo)->translatedFormat('d F Y') }}</p>
+                    <p class="text-xl font-bold text-gray-900">{{ $pembayaranAktif->bulan }}</p>
                 </div>
                 <div>
                     <p class="text-sm text-gray-500">Status</p>
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
-                          {{ $penyewa->status_bayar === 'Lunas' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                          {{ $penyewa->status_bayar }}
+                          {{ $pembayaranAktif->status === 'Lunas' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                          {{ $pembayaranAktif->status }}
                      </span>
                 </div>
             </div>
         </div>
+        @endif
 
         <div class="bg-yellow-100 bg-opacity-80 border border-yellow-500 rounded-xl p-2 mb-6 relative overflow-hidden">
             <div class="flex gap-4">
@@ -92,14 +98,14 @@
                     <p id="fileName" class="text-sm font-semibold text-gray-900">bukti.jpg</p>
                     <p id="fileSize" class="text-xs text-gray-500">1.2 MB</p>
                 </div>
-                <button onclick="removeFile()" class="text-sm font-semibold text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors">
+                <button type="button" onclick="removeFile()" class="text-sm font-semibold text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors">
                     Hapus
                 </button>
             </div>
          </div>
 
          @error('bukti_bayar')
-             <p class="text-red-50 text-xs mb-4">{{ $message }}</p>
+             <p class="text-red-500 text-xs mb-4">{{ $message }}</p>
          @enderror
 
          <div class="mb-6">
@@ -127,27 +133,6 @@
         </button>
     </form>
     @endif
-    </div>
-
-    <div class="max-w-4xl mx-auto mt-6 bg-white rounded-2xl border border-gray-200 p-6">
-        <h2 class="font-bold text-gray-800 mb-4">Riwayat Pembayaran</h2>
-
-        @forelse ($pembayarans as $bayar )
-            <div class="flex justify-between items-center p-4 border border-stone-200 rounded-xl mb-3 hover:border-blue-400 transition">
-                <div>
-                    <p class="font-bold text-gray-900">{{ $bayar->bulan }}</p>
-                    <p class="text-sm text-gray-500">Rp {{ number_format($bayar->jumlah, 0, ', ', '.') }}</p>
-                </div>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
-                {{ $bayar->status === 'Lunas' ? 'bg-green-100 text-green-700' : '' }}
-                {{ $bayar->status === 'Menunggu Konfirmasi' ? 'bg-yellow-100 text-yellow-700' : '' }}
-                {{ $bayar->status === 'Belum Lunas' ? 'bg-red-100 text-red-700' : '' }}">
-                {{ $bayar->status }}
-            </span>
-            </div>
-        @empty
-        <p class="text-center text-gray-400 text-sm py-4">Belum ada riwayat pembayaran</p> 
-        @endforelse
     </div>
 
     <script>

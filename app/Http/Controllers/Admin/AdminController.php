@@ -22,11 +22,15 @@ class AdminController extends Controller
         $totalTunggakan = Pembayaran::where('status', 'Belum Lunas')->count();
         $totalLaporan  = LaporanKerusakan::where('status', 'Menunggu')->count();
         $totalMenunggu = Pembayaran::where('status', 'Menunggu Konfirmasi')->count();
+        $bulanIni = now()->translatedFormat('F Y');
+        $totalJatuhTempo = Penyewa::where('jatuh_tempo', '<=', now()->addDays(7))
+                           ->where('status_bayar', '!=', 'Lunas')
+                           ->count();
         $laporanTerbaru = LaporanKerusakan::with('user')->where('status', 'Menunggu')
                           ->orderBy('created_at', 'desc')
                           ->take(4)
                           ->get();
-        $pembayaranTerbaru = Pembayaran::with('user.penyewa')
+        $pembayaranTerbaru = Pembayaran::with('user')
                             ->orderBy('created_at', 'desc')
                             ->take(5)
                             ->get();
@@ -36,6 +40,8 @@ class AdminController extends Controller
             'totalLunas',
             'totalTunggakan',
             'totalLaporan',
+            'totalMenunggu',
+            'totalJatuhTempo',
             'laporanTerbaru',
             'pembayaranTerbaru',
         ));
@@ -43,7 +49,7 @@ class AdminController extends Controller
 
     public function dataPenyewa()
     {
-        $penyewas = Penyewa::with('user')->get();
+        $penyewas = Penyewa::all();
         return view('admin.data-penyewa', compact('penyewas'));
     }
 
@@ -67,7 +73,7 @@ class AdminController extends Controller
 
     public function laporan()
     {
-        $laporans = LaporanKerusakan::with('user')->orderBy('created_at', 'desc')->get();
+        $laporans = LaporanKerusakan::with('user.penyewa')->orderBy('created_at', 'desc')->get();
 
         $laporanAktif = $laporans->whereIn('status', ['Menunggu', 'Diproses']);
         $laporanBaru  = $laporans->where('status', 'Menunggu');

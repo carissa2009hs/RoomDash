@@ -1,117 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login Admin</title>
+    <title>Login - RoomDash</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-100 flex items-center justify-center p-4">
+<body class="min-h-screen bg-gradient-to-br from-green-50 via-lime-50 to-emerald-100 flex items-center justify-center p-4">
 
+<div class="w-full max-w-sm bg-white rounded-3xl shadow-xl shadow-green-100 p-10">
 
- 
-
-
-    <div
-        class="relative z-10 w-full max-w-4xl bg-white rounded-3xl shadow-xl shadow-blue-100 overflow-hidden flex min-h-[560px]">
-
-        <div
-            class="hidden md:flex md:w-5/12 bg-gradient-to-b from-green-600 via-green-500 to-green-400 flex-col justify-between p-12 relative overflow-hidden">
-
-
-            <div
-                class="absolute top-0 right-0 w-52 h-52 bg-white opacity-10 rounded-full -translate-y-1/4 translate-x-1/4 pointer-events-none">
-            </div>
-            <div
-                class="absolute bottom-10 left-0 w-36 h-36 bg-white opacity-5 rounded-full -translate-x-1/4 pointer-events-none">
-            </div>
-
-
-            <div class="flex items-center gap-3 relative z-10">
-                <div
-                    class="w-11 h-11 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-2xl flex items-center justify-center">
-                    <i class="fa-solid fa-house-chimney text-white text-xl"></i>
-                </div>
-                <span class="text-white text-xl font-bold tracking-tight">RoomDash</span>
-            </div>
-
-
-            <div class="relative z-10 flex flex-col items-center text-center my-auto">
-                <h1 class="text-white text-3xl font-semibold font-poppins leading-tight tracking-tight mb-4">
-                    Selamat Datang Admin!
-                </h1>
-            </div>
+    <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-house-chimney text-white"></i>
         </div>
-
-
-        <div class="flex-1 flex flex-col justify-center px-10 py-12">
-
-            <div
-                class="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-600 text-xs font-semibold px-4 py-1.5 rounded-full w-fit mb-6">
-                Login terlebih dahulu.
-            </div>
-
-            <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-1">Masuk ke akun</h2>
-            <p class="text-sm text-slate-400 mb-8">Isi email dan password untuk melanjutkan</p>
-
-            @if ($errors->any())
-                <div
-                    class="flex items-center gap-2 bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-3 rounded-xl mb-5">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    {{ $errors->first() }}
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('admin.login') }}">
-                @csrf
-
-                <div class="mb-5">
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Alamat Email</label>
-                    <div class="relative">
-                        <input type="email" name="email"  placeholder="nama@email.com"
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 pl-11 text-sm text-slate-800 placeholder-slate-300 outline-none focus:border-blue-400 focus:bg-blue-50 focus:ring-4 focus:ring-blue-100 transition-all duration-200">
-                        <i
-                            class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 pointer-events-none"></i>
-                    </div>
-                </div>
-
-                <div class="mb-7">
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Password</label>
-                    <div class="relative">
-                        <input type="password" name="password" id="passwordInput" placeholder="••••••••"
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 pl-11 pr-11 text-sm text-slate-800 placeholder-slate-300 outline-none focus:border-blue-400 focus:bg-blue-50 focus:ring-4 focus:ring-blue-100 transition-all duration-200">
-                            <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 pointer-events-none"></i>
-
-                        <button type="button" onclick="togglePw()" id="pwBtn"
-                            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-blue-400 transition-colors text-base leading-none">
-                            <i class="fa-solid fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <button type="submit"
-                    class="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-3 rounded-xl text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-200 active:translate-y-0 flex items-center justify-center gap-2">
-                    Masuk ke Dashboard
-                    <i class="fa-solid fa-arrow-right w-4 h-4"></i>
-                </button>
-            </form>
-        </div>
+        <span class="text-xl font-bold text-gray-900">RoomDash</span>
     </div>
 
-        <script>
-            function togglePw() {
-                const input = document.getElementById('passwordInput');
-                const btn = document.getElementById('pwBtn');
-                input.type = input.type === 'password' ? 'text' : 'password';
-                btn.innerHTML = input.type === 'password' ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>';
-            }
-        </script>
+    <h2 class="text-2xl font-bold text-gray-900 mb-1">Selamat datang Admin!</h2>
+    <p class="text-sm text-gray-400 mb-8">Masuk untuk kelola para penyewa</p>
+
+    @if ($errors->any())
+    <div class="flex items-center gap-2 bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-3 rounded-xl mb-5">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{ $errors->first() }}
+    </div>
+    @endif
+
+    <form method="POST" action="/admin/login" class="space-y-4">
+        @csrf
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+            <div class="relative">
+                <input type="email" name="email" placeholder="nama@email.com" required
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 pl-10 text-sm outline-none focus:border-green-400 focus:ring-4 focus:ring-green-100 transition-all">
+                <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 text-sm"></i>
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
+            <div class="relative">
+                <input type="password" name="password" id="passwordInput" placeholder="••••••••" required
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 pl-10 pr-10 text-sm outline-none focus:border-green-400 focus:ring-4 focus:ring-green-100 transition-all">
+                <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 text-sm"></i>
+                <button type="button" onclick="togglePw()" id="pwBtn"
+                    class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-300 hover:text-green-400 transition-colors">
+                    <i class="fa-solid fa-eye text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <button type="submit"
+            class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl text-sm transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-green-200 flex items-center justify-center gap-2 mt-2">
+            Masuk
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+        </button>
+    </form>
+</div>
+
+<script>
+function togglePw() {
+    const input = document.getElementById('passwordInput');
+    const btn = document.getElementById('pwBtn');
+    input.type = input.type === 'password' ? 'text' : 'password';
+    btn.innerHTML = input.type === 'password'
+        ? '<i class="fa-solid fa-eye text-sm"></i>'
+        : '<i class="fa-solid fa-eye-slash text-sm"></i>';
+}
+</script>
 
 </body>
-
 </html>
