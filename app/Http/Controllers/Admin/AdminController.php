@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use App\Models\Pembayaran;
 use App\Models\LaporanKerusakan;
 use App\Models\Penyewa;
@@ -92,6 +93,9 @@ class AdminController extends Controller
         $pembayaran = Pembayaran::findOrFail($id);
         $pembayaran->update(['status' => 'Lunas']);
         $pembayaran->update(['status' => 'Lunas']);
+        if ($pembayaran->user->penyewa) {
+            $pembayaran->user->penyewa->update(['status_bayar' => 'Lunas']);
+        }
         $pembayaran->user->notify(new PembayaranDikonfirmasi($pembayaran));
         
         return back()->with('success', 'Pembayaran berhasil dikonfirmasi!');
@@ -104,6 +108,10 @@ class AdminController extends Controller
             'status' => 'Belum Lunas',
             'bukti_bayar' => null,
         ]);
+
+        if ($pembayaran->user->penyewa) {
+            $pembayaran->user->penyewa->update(['status_bayar' => 'Belum Lunas']);
+        }
 
     $pembayaran->user->notify(new PembayaranDitolak($pembayaran));
 
@@ -125,5 +133,25 @@ class AdminController extends Controller
             'laporan' => LaporanKerusakan::where('status', 'Menunggu')->count(),
             'pembayaran' => Pembayaran::where('status', 'Menunggu Konfirmasi')->count(),
         ]);
+    }
+
+    public function ingatkanPembayaran($id)
+    {
+        $pembayaran = Pembayaran::with('user.penyewa')->findOrFail($id);
+        $user = $pembayaran->user;
+        $noHp = $user->no_hp;
+
+        if (!$noHp) {
+            return back()->with('error', 'Nomor Hp penyewa belum diisi');
+        }
+        $pesan = "Halo *{$user->name}*, pembayaran sewa kamar {$user->penyewa->nomor_kamar} bulan {$pembayaran->bulan} sebesar Rp " . number_format($pembayaran->jumlah, 0, ',', '.') . "Segera lakukan pembayaran ya!";
+
+        Http::withHeaders([
+            'Authorization' => env('FONNTE_TOKEN'),
+        ])->post('https://api.fonnte.com/send', [
+            'target' => $noHp,
+            'message' => $pesan
+        ]);
+        return back()->with('success', 'Pesan WA berhasil dikirim ke ' . $user->name);
     }
 }

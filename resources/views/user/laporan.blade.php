@@ -7,7 +7,7 @@
         <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
             <i class="fa-solid fa-wrench text-blue-600 text-lg"></i>
         </div>
-        <h1 class="text-2xl font-bold text-gray-900">Laporan Kerusakan</h1>
+        <h1 class="text-xl font-semibold text-gray-800">Laporan Kerusakan</h1>
     </div>
 </div>
 
@@ -20,11 +20,8 @@
 
     <div class="bg-blue-100 bg-opacity-80 border border-blue-500 rounded-xl p-2 mb-6 relative overflow-hidden">
         <div class="flex gap-4">
-            <div class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
-                <i class="fa-solid fa-info text-lg text-blue-200"></i>
-            </div>
             <div class="flex-1">
-                <p class="text-sm font-semibold text-gray-800 mt-1">
+                <p class="text-sm font-semibold text-gray-800  ml-4">
                     Foto yang jelas akan mempercepat proses penanganan oleh teknisi.</p>
             </div>
         </div>
@@ -84,7 +81,6 @@
 
 
     <button type="submit" class="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-xl text-base font-bold hover:-translate-y-1 shadow-sm hover:shadow-lg transition-all flex items-center justify-center gap-2">
-        <i class="fa-solid fa-upload mr-2"></i>
         <p class="text-sm text-white">Kirim Laporan</p>
        </button>
     </form>

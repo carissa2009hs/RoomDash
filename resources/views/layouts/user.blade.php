@@ -7,11 +7,8 @@
     <title>@yield('title', 'RoomDash')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -19,7 +16,7 @@
 
     <!-- SIDEBAR -->
     <aside
-        class="fixed left-0 top-0 w-64 h-screen bg-gradient-to-b from-blue-50 to-white text-gray-700 border-r border-gray-200 z-50 shadow-sm">
+        class="fixed left-0 top-0 w-64 h-screen bg-white text-gray-700 border-r border-gray-200 z-50 shadow-sm">
 
         <div class="h-20 flex items-center px-6 border-b border-gray-200/50">
             <div
@@ -32,29 +29,28 @@
 
         <nav class="p-4 space-y-2 mt-4">
             <a href="{{ route('user.dashboard') }}"
-                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('user.dashboard') ? 'bg-white text-blue-700 shadow-md' : 'text-gray-600 hover:bg-white hover:shadow-sm hover:text-blue-600' }}">
+                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('user.dashboard') ? 'bg-blue-50 text-blue-700 shadow-md' : 'text-gray-600 hover:bg-blue-50 hover:shadow-sm hover:text-blue-600' }}">
                 <i
                     class="fa-solid fa-chart-line w-5 {{ request()->routeIs('user.dashboard') ? 'text-blue-600' : '' }}"></i>
                 <span>Dashboard</span>
             </a>
 
             <a href="{{ route('user.pembayaran') }}"
-                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('user.pembayaran') ? 'bg-white text-blue-700 shadow-md' : 'text-gray-600 hover:bg-white hover:shadow-sm hover:text-blue-600' }}">
+                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('user.pembayaran') ? 'bg-blue-50 text-blue-700 shadow-md' : 'text-gray-600 hover:bg-blue-50 hover:shadow-sm hover:text-blue-600' }}">
                 <i
                     class="fa-solid fa-wallet w-5 {{ request()->routeIs('user.pembayaran') ? 'text-blue-600' : '' }}"></i>
                 <span>Pembayaran Sewa</span>
             </a>
 
             <a href="{{ route('user.laporan') }}"
-                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('user.laporan') ? 'bg-white text-blue-700 shadow-md' : 'text-gray-600 hover:bg-white hover:shadow-sm hover:text-blue-600' }}">
+                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('user.laporan') ? 'bg-blue-50 text-blue-700 shadow-md' : 'text-gray-600 hover:bg-blue-50 hover:shadow-sm hover:text-blue-600' }}">
                 <i class="fa-solid fa-wrench w-5 {{ request()->routeIs('user.laporan') ? 'text-blue-600' : '' }}"></i>
                 <span>Laporan Kerusakan</span>
             </a>
 
             <a href="{{ route('user.riwayat') }}"
-                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('user.riwayat') ? 'bg-white text-blue-700 shadow-md' : 'text-gray-600 hover:bg-white hover:shadow-sm hover:text-blue-600' }}">
-                <i
-                    class="fa-solid fa-clock-rotate-left w-5 {{ request()->routeIs('user.riwayat') ? 'text-blue-600' : '' }}"></i>
+                class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 {{ request()->routeIs('user.riwayat') ? 'bg-blue-50 text-blue-700 shadow-md' : 'text-gray-600 hover:bg-blue-50 hover:shadow-sm hover:text-blue-600' }}">
+                <i class="fa-solid fa-clock-rotate-left w-5 {{ request()->routeIs('user.riwayat') ? 'text-blue-600' : '' }}"></i>
                 <span>Riwayat</span>
             </a>
         </nav>
@@ -72,8 +68,13 @@
         </div>
     </aside>
    
-    <div class="ml-64 h-16 fixed top-0 right-0 left-64 z-40 flex items-center justify-end px-8">
-        <div class="relative">
+    <div class="fixed top-0 left-64 right-0 h-16 z-40 flex items-center justify-between px-8 bg-white border-b border-gray-100 shadow-sm">
+        <div>
+            <h2 class="text-xl font-semibold text-slate-900 leading-none">
+                Selamat Datang, {{ auth()->user()->name }} !
+            </h2>
+        </div>
+        <div class="relative ml-auto">
             <button onclick="toggleNotif()"
                 class="relative w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-all">
                 <i class="fa-solid fa-bell text-gray-600 text-lg"></i>
@@ -84,7 +85,8 @@
                     </span>
                 @endif
             </button>
-
+            
+            
 
             <div id="notif-dropdown"
                 class="hidden absolute right-0 top-12 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
@@ -105,8 +107,7 @@
                             {{ $notif->data['icon'] === 'success' ? 'bg-green-100' : '' }}
                             {{ $notif->data['icon'] === 'error' ? 'bg-red-100' : '' }}
                             {{ $notif->data['icon'] === 'info' ? 'bg-blue-100' : '' }}">
-                                <i
-                                    class="text-sm
+                                <i class="text-sm
                                 {{ $notif->data['icon'] === 'success' ? 'fa-solid fa-check text-green-600' : '' }}
                                 {{ $notif->data['icon'] === 'error' ? 'fa-solid fa-xmark text-red-600' : '' }}
                                 {{ $notif->data['icon'] === 'info' ? 'fa-solid fa-wrench text-blue-600' : '' }}">
@@ -146,10 +147,10 @@
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </span>
             </div>
-            <span class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</span>
+                <span class="text-sm font-medium text-gray-700">{{ auth()->user()->name }}</span>
         </div>
     </div>
-
+    
     <main class="ml-64 mt-16 p-8">
         @yield('content')
     </main>

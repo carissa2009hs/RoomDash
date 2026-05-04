@@ -2,18 +2,15 @@
 @section('title', 'Dashboard Admin')
 @section('content')
 
-<div class="flex items-center gap-3 mb-6">
-    <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-        <i class="fa-solid fa-chart-line text-blue-600 text-lg"></i>
-    </div>
-    <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-</div>
+    <h1 class="text-xl text-gray-800">Selamat Datang, Admin!</h1>
+    <p class="text-sm text-gray-400 mb-8">Ringkasan pengelolaan kos hari ini</p>
+
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
     <a href="{{ route('admin.pembayaran') }}"
         class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg hover:-translate-y-1 hover:scale-105 transition-all duration-200">
         <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center">
                 <i class="fa-solid fa-sack-dollar text-2xl"></i>
             </div>
             <h3 class="font-semibold text-gray-900">Pendapatan bulan ini</h3>
@@ -24,7 +21,7 @@
     <a href="{{ route('admin.data-penyewa') }}"
         class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg hover:-translate-y-1 hover:scale-105 transition-all duration-200">
         <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center">
                 <i class="fa-solid fa-door-open text-2xl"></i>
             </div>
             <h3 class="font-semibold text-gray-900">Total kamar</h3>
@@ -35,7 +32,7 @@
 
     <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg hover:-translate-y-1 hover:scale-105 transition-all duration-200">
         <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center">
                 <i class="fa-solid fa-calendar-days text-2xl"></i>
             </div>
             <h3 class="font-semibold text-gray-900">Jatuh Tempo</h3>
@@ -47,7 +44,7 @@
     <a href="{{ route('admin.laporan') }}"
         class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg hover:-translate-y-1 hover:scale-105 transition-all duration-200">
         <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center">
                 <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
             </div>
             <h3 class="font-semibold text-gray-900">Laporan Kerusakan</h3>
@@ -78,7 +75,7 @@
 
         <div class="overflow-x-auto mt-4">
             <table class="w-full">
-                <thead class="bg-blue-50 border-b border-gray-200">
+                <thead class="bg-sky-50 border-b border-gray-200">
                     <tr>
                         <th class="text-left py-3 px-4 font-semibold uppercase tracking-wider text-gray-700 text-xs">No Kamar</th>
                         <th class="text-left py-3 px-4 font-semibold uppercase tracking-wider text-gray-700 text-xs">Nama Penghuni</th>
@@ -97,7 +94,7 @@
                             $telat = (int) now()->diffInDays(\Carbon\Carbon::parse($bayar->user->penyewa->jatuh_tempo), false) * -1;
                         }
                     @endphp
-                    <tr class="border-b border-gray-100 bg-white hover:bg-blue-50 transition-colors"
+                    <tr class="border-b border-gray-100 bg-white hover:bg-sky-50 transition-colors"
                         data-status="{{ $bayar->status }}"
                         data-nama="{{ $bayar->user->name }} {{ $bayar->user->penyewa->nomor_kamar ?? '' }}">
                         <td class="py-4 px-4 text-gray-700">
@@ -114,7 +111,7 @@
                                     Telat {{ $telat }} Hari
                                 </span>
                             @elseif ($bayar->status == 'Menunggu Konfirmasi')
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-blue-100 text-blue-700">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-sky-100 text-sky-700">
                                     Menunggu Konfirmasi
                                 </span>
                             @elseif ($bayar->status == 'Lunas')
@@ -178,7 +175,7 @@
                 </tbody>
             </table>
             <a href="{{ route('admin.pembayaran') }}"
-                class="text-blue-700 text-sm font-semibold mt-3 mb-4 flex items-center justify-center">Lihat Selengkapnya -></a>
+                class="text-sky-700 text-sm font-semibold mt-3 mb-4 flex items-center justify-center">Lihat Selengkapnya -></a>
         </div>
     </div>
 
@@ -188,18 +185,18 @@
         </div>
         <div class="p-6 space-y-4">
             @forelse ($laporanTerbaru as $laporan)
-            <div class="border border-gray-200 rounded-xl p-4 hover:border-blue-400 hover:shadow-sm transition-all duration-200 cursor-pointer">
+            <div class="border border-gray-200 rounded-xl p-4 hover:border-sky-400 hover:shadow-sm transition-all duration-200 cursor-pointer">
                 <div class="flex justify-between items-start">
                     <div class="flex items-start gap-3 flex-1">
-                        <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-user text-blue-600 text-sm"></i>
+                        <div class="w-8 h-8 bg-sky-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-user text-sky-600 text-sm"></i>
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-900">{{ $laporan->user->name }}</h4>
                             <p class="text-gray-600 mt-1 text-sm">{{ $laporan->judul }}</p>
                         </div>
                     </div>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white ml-2 flex-shrink-0">Baru</span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-sky-600 text-white ml-2 flex-shrink-0">Baru</span>
                 </div>
             </div>
             @empty
@@ -207,7 +204,7 @@
             @endforelse
 
             <a href="{{ route('admin.laporan') }}"
-                class="text-blue-700 text-sm font-semibold mt-3 mb-4 flex items-center justify-center">Lihat Selengkapnya -></a>
+                class="text-sky-700 text-sm font-semibold mt-3 mb-4 flex items-center justify-center">Lihat Selengkapnya -></a>
         </div>
     </div>
 </div>

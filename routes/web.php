@@ -47,4 +47,6 @@ Route::middleware('auth')->prefix('user')->group(function () {
     Route::get('/riwayat', [UserController::class, 'riwayat'])->name('user.riwayat');
     Route::get('/notifikasi/{id}/baca', [UserController::class, 'bacaNotif'])->name('notifikasi.baca');
     Route::get('/notifikasi/baca-semua', [UserController::class, 'bacaSEmuaNotif'])->name('notifikasi.baca-semua');
+
+    Route::post('/admin/pembayaran/{id}/ingatkan', [AdminController::class, 'ingatkanPembayaran'])->name('admin.ingatkan');
 });

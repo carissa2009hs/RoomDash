@@ -10,8 +10,7 @@
         <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
     </div>
     </div>
-
-    <div class="bg-gradient-to-br from-blue-600 to-blue-400 rounded-3xl p-10 mb-6 relative overflow-hidden">
+    <div class="bg-blue-600 rounded-3xl p-10 mb-6 relative overflow-hidden">
         <div class="absolute -top-1/3 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
         <div class="relative z-10">
             <p class="text-lg text-white/85 mb-2">Selamat datang kembali,</p>
@@ -41,53 +40,6 @@
                         Telat!
                         @endif
                     </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-
-    @if ($sisaHari <= 5 && $penyewa->status_bayar != 'Lunas')
-    <div class="bg-yellow-100 bg-opacity-80 border border-yellow-500 rounded-2xl p-6 mb-6 relative overflow-hidden">
-        <div class="flex gap-4">
-            <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-md flex-shrink-0">
-                <i class="fa-solid fa-triangle-exclamation text-2xl text-yellow-200"></i>
-            </div>
-            <div class="flex-1">
-                <p class="text-sm font-bold text-gray-900">
-                    Pembayaran Bulan Depan Segera Jatuh Tempo!</p>
-                <p class="text-xs text-gray-600 mt-1">Tagihan Maret 2026 sebesar Rp 1.200.000 akan jatuh tempo pada 5 Maret
-                    2026. Segera transfer & upload bukti bayar</p>
-            </div>
-        </div>
-    </div>
-    @endif
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-
-        <div
-            class="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-blue-600 transition-all">
-            <div class="flex items-start gap-3">
-                <a href="{{ route('user.pembayaran') }}" class="w-12 h-12 bg-sky-600 bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur">
-                    <i class="fa-solid fa-wallet text-2xl text-sky-600"></i>
-                </a>
-                <div class="mt-1">
-                    <a href="{{ route('user.pembayaran') }}" class="text-lg text-gray-900 font-bold">Bayar Sewa</a>
-                    <p class="text-sm text-gray-500">Upload bukti transfer pembayaran</p>
-
-                </div>
-            </div>
-        </div>
-
-        <div
-            class="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-blue-600 transition-all">
-            <div class="flex items-start gap-3">
-                <a href="{{ route('user.laporan') }}" class="w-12 h-12 bg-sky-600 bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur">
-                    <i class="fa-solid fa-wrench text-2xl text-sky-600"></i>
-                </a>
-                <div class="mt-1">
-                    <a href="{{ route('user.laporan') }}" class="text-lg text-gray-900 font-bold ">Laporan Kerusakan</a>
-                    <p class="text-sm text-gray-500">Laporkan masalah fasilitas kamar</p>
                 </div>
             </div>
         </div>
@@ -169,7 +121,7 @@
             @endforelse
 
             <a href="{{ route('user.riwayat') }}"
-            class="text-blue-700 text-sm font-semibold mt-3 mb-4 flex items-center justify-center">Lihat
+            class="text-blue-700 text-sm font-semibold mt-3 mb-4 flex items-center justify-center hover:underline">Lihat
             Selengkapnya -></a>
         </div>
         

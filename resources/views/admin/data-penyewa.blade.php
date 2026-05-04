@@ -4,13 +4,10 @@
 
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
     <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-            <i class="fa-solid fa-users text-blue-600 text-lg"></i>
-        </div>
-        <h1 class="text-2xl font-bold text-gray-900">Data Penyewa</h1>
+        <h1 class="text-xl font-semibold text-gray-800">Data Penyewa</h1>
     </div>
     <button id="btnTambahPenyewa"
-        class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm">
+        class="flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm">
         + Tambah Penyewa
     </button>
 </div>
@@ -22,7 +19,7 @@
         <input type="text" id="searchInput" placeholder="Cari nama atau kamar"
             class="w-full px-3 py-2 text-sm focus:outline-none bg-transparent">
         <button id="btnCari"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-full text-xs font-medium transition">Cari</button>
+            class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-1.5 rounded-full text-xs font-medium transition">Cari</button>
     </div>
 </div>
 
@@ -44,12 +41,12 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
                     <input type="text" name="nama" required
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
                     <input type="email" name="email" required
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
                 </div>
             </div>
 
@@ -57,19 +54,19 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon *</label>
                     <input type="tel" name="telepon" required
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Kamar *</label>
                     <input type="text" name="kamar" required
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
                 </div>
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Check-in *</label>
                 <input type="date" name="checkin" required
-                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition">
             </div>
 
             <div class="flex gap-3 pt-4">
@@ -78,7 +75,7 @@
                     Batal
                 </button>
                 <button type="submit"
-                    class="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                    class="flex-1 px-4 py-2.5 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition font-medium">
                     Simpan
                 </button>
             </div>
@@ -106,7 +103,7 @@
                 <div class="col-span-full text-center py-16">
                     <i class="fa-solid fa-exclamation-triangle text-red-400 text-5xl mb-4"></i>
                     <p class="text-red-600 font-semibold">Gagal memuat data</p>
-                    <button onclick="loadData()" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg">Coba Lagi</button>
+                    <button onclick="loadData()" class="mt-4 px-4 py-2 bg-sky-600 text-white rounded-lg">Coba Lagi</button>
                 </div>
             `;
         }

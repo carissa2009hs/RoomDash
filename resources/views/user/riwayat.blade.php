@@ -7,7 +7,7 @@
         <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
             <i class="fa-solid fa-clock-rotate-left text-blue-600 text-lg"></i>
         </div>
-        <h1 class="text-2xl font-bold text-gray-900">Riwayat</h1>
+        <h1 class="text-xl font-semibold text-gray-800">Riwayat</h1>
     </div>
 </div>
 
@@ -17,7 +17,6 @@
         <div class="bg-white rounded-xl border border-stone-200">
             <div class="px-6 py-4 border-b border-stone-100">
                 <h3 class="font-bold text-lg mb-1 mt-2">
-                    <i class="fa-solid fa-wallet text-blue-600 mr-2"></i>
                     Riwayat Pembayaran
                 </h3>
                 <p class="text-sm text-gray-500 mt-1">Semua riwayat pembayaran sewa</p>
@@ -49,7 +48,6 @@
         <div class="bg-white rounded-xl border border-stone-200">
             <div class="px-6 py-4 border-b border-stone-100">
                 <h3 class="font-bold text-lg mb-1 mt-2">
-                    <i class="fa-solid fa-wrench text-blue-600 mr-1"></i>
                     Riwayat Laporan
                 </h3>
                 <p class="text-xs text-gray-500 mt-0.5">Semua laporan kerusakan</p>

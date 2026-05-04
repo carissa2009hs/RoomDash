@@ -42,6 +42,11 @@ class UserController extends Controller
 
     $sisaHari = 0;
     if ($penyewa) {
+        $jatuhTempo = \Carbon\Carbon::parse($penyewa->jatuh_tempo);
+        if ($jatuhTempo->isPast()) {
+            $jatuhTempo = $jatuhTempo->addMonth();
+            $penyewa->update(['jatuh_tempo' =>$jatuhTempo->format('Y-m-d')]);
+        }
         $sisaHari = (int) Carbon::now()->diffInDays(
             Carbon::parse($penyewa->jatuh_tempo), false
         );
@@ -59,9 +64,30 @@ class UserController extends Controller
 
     public function pembayaran()
     {
-        $pembayarans = Pembayaran::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        $user = Auth::user();
+        $penyewa = $user->penyewa;
 
-        return view('user.pembayaran', compact('pembayarans'));
+        $pembayaranAktif = Pembayaran::firstOrCreate(
+            [
+                'user_id' => $user->id,
+                'bulan'   => now()->translatedFormat('F Y'),
+            ],
+            [ 
+                 'jumlah' => $penyewa->tagihan,
+                 'status' => 'Belum Lunas',
+                
+            ]
+            );
+        $pembayarans = Pembayaran::where('user_id', $user->id)
+                       ->orderBy('created_at', 'desc')
+                       ->get();
+
+        return view('user.pembayaran', compact(
+            'user',
+            'penyewa',
+            'pembayarans',
+            'pembayaranAktif'
+        ));
     }
 
     public function laporan()

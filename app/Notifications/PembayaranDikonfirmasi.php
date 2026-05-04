@@ -22,7 +22,7 @@ class PembayaranDikonfirmasi extends Notification
     {
         return [
             'judul' => 'Pembayaran Dikonfirmasi',
-            'pesan' => 'Pembayaran bulan' . $this->pembayaran->bulan . 'sebesar Rp' . number_format($this->pembayaran->jumlah, 0, ',', '.'). 'telah dikonfirmasi!',
+            'pesan' => 'Pembayaran bulan' . $this->pembayaran->bulan . ' sebesar Rp ' . number_format($this->pembayaran->jumlah, 0, ', ',  '.'). ' telah dikonfirmasi! ',
             'icon' => 'success',
             'link' => '/user/pembayaran',
         ];

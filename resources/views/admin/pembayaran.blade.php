@@ -2,14 +2,8 @@
 @section('title', 'Pembayaran')
 @section('content')
 
-    <div class="flex items-center justify-between mb-8">
-        <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <i class="fa-solid fa-wallet text-blue-600 text-lg"></i>
-            </div>
-            <h1 class="text-2xl font-bold text-gray-900">Pembayaran Sewa</h1>
-        </div>
-    </div>
+<h1 class="text-xl text-gray-800">Pembayaran Sewa</h1>
+<p class="text-sm text-gray-400 mb-8">Pantau dan catat semua transaksi sewa</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
 
@@ -57,8 +51,8 @@
         <div
             class="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
             <div class="flex items-start gap-3">
-                <div class="w-12 h-12 bg-green-400 bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur">
-                    <i class="fa-solid fa-circle-check text-2xl text-green-600"></i>
+                <div class="w-12 h-12 bg-sky-400 bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur">
+                    <i class="fa-solid fa-circle-check text-2xl text-sky-600"></i>
                 </div>
                 <div class="mt-3">
                     <p class="text-l text-gray-900 font-bold ">{{ $totalLunas }}</p>
@@ -71,7 +65,7 @@
     <div class="mb-4">
         <div class="flex justify-end">
             <div
-                class="flex items-center bg-white border border-gray-200 rounded-xl pl-4 pr-4 py-1 shadow-sm w-full max-w-md focus-within:ring-2 focus-within:ring-blue-300 focus-within:border-blue-400 transition">
+                class="flex items-center bg-white border border-gray-200 rounded-xl pl-4 pr-4 py-1 shadow-sm w-full max-w-md focus-within:ring-2 focus-within:ring-sky-300 focus-within:border-sky-400 transition">
                 <i class="fa-solid fa-magnifying-glass text-sm text-gray-400 ml-2"></i>
                 <input type="text" id="search-input" oninput="filterSearch()" placeholder="Cari nama atau kamar"
                     class="w-full px-2 py-2 text-sm focus:outline-none bg-transparent">
@@ -99,7 +93,7 @@
 
         <div class="overflow-x-auto">
             <table class="w-full">
-                <thead class="bg-blue-50 border-b border-gray-200">
+                <thead class="bg-sky-50 border-b border-gray-200">
                     <tr>
                         <th class="text-left py-3 px-4 font-semibold uppercase tracking-wider text-gray-700 text-xs">No
                             Kamar</th>
@@ -125,7 +119,7 @@
                             $telat = (int) now()->diffInDays(\Carbon\Carbon::parse($bayar->user->penyewa->jatuh_tempo), false) * -1;
                         }
                     @endphp
-                        <tr class="border-b border-gray-100 bg-white hover:bg-blue-50 transition-colors"
+                        <tr class="border-b border-gray-100 bg-white hover:bg-sky-50 transition-colors"
                             data-status="{{ $bayar->status }}"
                             data-nama="{{ $bayar->user->name }} {{ $bayar->user->penyewa->nomor_kamar ?? '' }}">
                             <td class="py-4 px-4 text-gray-700">
@@ -146,8 +140,8 @@
                                     Telat {{ $telat }} Hari
                                 </span>
                             @elseif ($bayar->status == 'Menunggu Konfirmasi')
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-blue-100 text-blue-700">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-sky-100 text-sky-700">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
                                     Menunggu Konfirmasi
                                 </span>
                             @elseif ($bayar->status == 'Lunas')
@@ -190,9 +184,12 @@
                                     </form>
                                 </div>
                             @elseif ($bayar->status == 'Belum Lunas')
-                                <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-orange-100 text-orange-600 hover:bg-orange-200 transition-colors">
+                                <form action="{{ route('admin.ingatkan', $bayar->id) }}" method="POST" class="inline">
+                                    @csrf
+                                <button type="submit" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-orange-100 text-orange-600 hover:bg-orange-200 transition-colors">
                                     Ingatkan
                                 </button>
+                            </form>
                             @elseif ($bayar->status == 'Lunas')
                                 @if ($bayar->bukti_bayar)
                                 <a href="{{ asset('storage/' . $bayar->bukti_bayar) }}" target="_blank"

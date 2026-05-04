@@ -2,14 +2,8 @@
 @section('title', 'Laporan Kerusakan')
 @section('content')
 
-    <div class="flex items-center justify-between mb-8">
-        <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                <i class="fa-solid fa-wrench text-blue-600 text-lg"></i>
-            </div>
-            <h1 class="text-2xl font-bold text-gray-900">Laporan Kerusakan</h1>
-        </div>
-    </div>
+<h1 class="text-xl text-gray-800">Laporan Kerusakan</h1>
+<p class="text-sm text-gray-400 mb-8">Kelola dan tindaklanjuti laporan dari penyewa</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
 
@@ -58,8 +52,8 @@
         <div
             class="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
             <div class="flex items-start gap-3">
-                <div class="w-12 h-12 bg-green-400 bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur">
-                    <i class="fa-solid fa-check text-2xl text-green-600"></i>
+                <div class="w-12 h-12 bg-sky-400 bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur">
+                    <i class="fa-solid fa-check text-2xl text-sky-600"></i>
                 </div>
                 <div class="mt-3">
                     <p class="text-sm text-gray-500 font-semibold ">Selesai</p>
@@ -100,14 +94,14 @@
                     </div>
                         <div class="flex flex-col items-end gap-2 flex-shrink-0">
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold
-                          {{ $laporan->prioritas == 'Berat' ? 'bg-red-100 text-red-600' : ($laporan->prioritas == 'Sedang' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-700') }}">
+                          {{ $laporan->prioritas == 'Berat' ? 'bg-red-100 text-red-600' : ($laporan->prioritas == 'Sedang' ? 'bg-yellow-100 text-yellow-800' : 'bg-sky-100 text-sky-700') }}">
                                 {{ $laporan->prioritas }}
                             </span>
                             <form action="{{ route('admin.laporan.status', $laporan->id) }}" method="POST">
                                 @csrf
                                 <select name="status" onchange="updateStatus(this)"
                                     class="text-xs border-0 rounded-lg px-2 py-1 cursor-pointer focus:outline-none font-semibold
-                                    {{ $laporan->status == 'Menunggu' ? 'bg-red-100 text-red-600' : ($laporan->status == 'Diproses' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700') }}">
+                                    {{ $laporan->status == 'Menunggu' ? 'bg-red-100 text-red-600' : ($laporan->status == 'Diproses' ? 'bg-yellow-100 text-yellow-700' : 'bg-sky-100 text-sky-700') }}">
                                     <option value="Menunggu" {{ $laporan->status == 'Menunggu' ? 'selected' : '' }}>Belum
                                         Ditangani</option>
                                     <option value="Diproses" {{ $laporan->status == 'Diproses' ? 'selected' : '' }}>Sedang
@@ -122,7 +116,7 @@
                         <span class="text-xs text-gray-400">{{ $laporan->created_at->format('d M Y, H:i') }}</span>
                         @if ($laporan->foto)
                             <a href="{{ asset('storage/' . $laporan->foto) }}" target="_blank"
-                                class="inline-flex items-center gap-1.5 mt-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-600 hover:bg-blue-100 transition border border-blue-200">
+                                class="inline-flex items-center gap-1.5 mt-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-50 text-sky-600 hover:bg-sky-100 transition border border-sky-200">
                                 <i class="fa-solid fa-image text-xs"></i>
                                 Lihat Bukti
                             </a>
@@ -152,7 +146,7 @@
     } else if (el.value === 'Diproses') {
         el.className = 'text-xs rounded-lg px-2 py-1 cursor-pointer focus:outline-none font-semibold border-0 bg-yellow-100 text-yellow-700';
     } else {
-        el.className = 'text-xs rounded-lg px-2 py-1 cursor-pointer focus:outline-none font-semibold border-0 bg-green-100 text-green-700';
+        el.className = 'text-xs rounded-lg px-2 py-1 cursor-pointer focus:outline-none font-semibold border-0 bg-sky-100 text-sky-700';
     }
 
     var url = el.closest('form').action;

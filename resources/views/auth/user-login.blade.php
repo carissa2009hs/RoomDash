@@ -63,6 +63,7 @@
     <p class="text-center text-sm text-gray-400 mt-5">
         Belum punya akun? <a href="{{ route('register') }}" class="text-blue-600 font-semibold hover:underline">Daftar</a>
     </p>
+    <p></p>
 </div>
 
 <script>
